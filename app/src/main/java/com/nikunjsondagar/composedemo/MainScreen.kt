@@ -6,9 +6,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
@@ -19,9 +21,18 @@ import androidx.navigation.compose.rememberNavController
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
-    Scaffold(bottomBar = { BottomBar(navHostController = navController) }) { innerPadding ->
+    Scaffold(
+        topBar = { MainScreenTopBar() },
+        bottomBar = { BottomBar(navHostController = navController) }) { innerPadding ->
         MainScreenNavigationGraph(navHostController = navController, innerPadding)
     }
+}
+
+@Composable
+fun MainScreenTopBar() {
+    SmallTopAppBar(title = {
+        Text(text = stringResource(id = R.string.app_name))
+    })
 }
 
 @Composable

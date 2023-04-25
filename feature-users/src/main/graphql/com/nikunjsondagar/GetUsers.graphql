@@ -1,0 +1,21 @@
+query GetUsers {
+    search(query: "location:in", type: USER, first: 25) {
+        edges {
+            node {
+                ... on User {
+                    avatarUrl
+                    followers {
+                        totalCount
+                    }
+                    id
+                    login
+                    name
+                    repositories {
+                        totalCount
+                    }
+                }
+            }
+        }
+        userCount
+    }
+}

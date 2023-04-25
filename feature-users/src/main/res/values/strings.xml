@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="profile_image_accessibility_text">User profile picture</string>
+    <string name="repo_available_label_text">Repo available: %1$s</string>
+    <string name="follow_button_text">Follow</string>
+    <string name="unfollow_button_text">Unfollow</string>
+</resources>

@@ -1,6 +1,9 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'com.apollographql.apollo3' version "3.8.1"
+    id 'org.jetbrains.kotlin.kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -33,13 +36,26 @@ android {
     }
 }
 
+apollo {
+    service("service") {
+        packageName.set("com.nikunjsondagar")
+    }
+}
+
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.apollographql.apollo.runtime)
     testImplementation(libs.test.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.androidx.test.espresso.core)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+    kapt(libs.hilt.ext.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation("io.coil-kt:coil-compose:2.0.0-rc01")
+    kaptAndroidTest(libs.hilt.compiler)
 }
