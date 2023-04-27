@@ -31,6 +31,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -58,6 +59,24 @@ fun DisplayUsersList(
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun PreviewUserItem() {
+    UserItem(
+        modifier = Modifier
+            .padding(all = 10.dp)
+            .fillMaxWidth(),
+        userDetails = UserDetails(
+            name = "Nikunj Sondagar",
+            avatarURL = "https://avatars.githubusercontent.com/u/131298169?u=b0c5c6c8307b4678d34ce56afdb04f4bc54f25cf&v=4",
+            noOfRepositoriesAvailable = "2",
+            profileURL = "https://github.com/nsondagar-altimetrik"
+        ).apply {
+            noOfFollowers.value = 6
+        }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -95,14 +114,25 @@ fun UserItem(modifier: Modifier, userDetails: UserDetails) {
                     fontSize = MaterialTheme.typography.titleMedium.fontSize
                 )
                 Spacer(modifier = Modifier.size(2.dp))
-                Text(
-                    text = stringResource(
-                        id = R.string.no_of_followers_label_text,
-                        userDetails.noOfFollowers.value
-                    ),
-                    fontWeight = FontWeight.Normal,
-                    fontSize = MaterialTheme.typography.titleSmall.fontSize
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = stringResource(
+                            id = R.string.total_followers_count_label,
+                            userDetails.noOfFollowers.value
+                        ),
+                        fontWeight = FontWeight.Normal,
+                        fontSize = MaterialTheme.typography.bodySmall.fontSize
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Text(
+                        text = stringResource(
+                            id = R.string.total_repo_count_label,
+                            userDetails.noOfRepositoriesAvailable
+                        ),
+                        fontWeight = FontWeight.Normal,
+                        fontSize = MaterialTheme.typography.bodySmall.fontSize
+                    )
+                }
             }
             Spacer(modifier = Modifier.width(6.dp))
             Button(

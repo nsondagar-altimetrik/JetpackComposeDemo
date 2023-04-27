@@ -17,12 +17,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -65,7 +65,8 @@ class WebViewActivity : ComponentActivity() {
 
 @Composable
 fun showToastMessage(context: Context) {
-    Toast.makeText(context, stringResource(id = R.string.web_view_error_message), Toast.LENGTH_LONG).show()
+    Toast.makeText(context, stringResource(id = R.string.web_view_error_message), Toast.LENGTH_LONG)
+        .show()
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -76,7 +77,11 @@ fun DisplayWebViewUI(profileURL: String) {
         topBar = { WebViewTopAppBar() },
         content = {
             Box(modifier = Modifier.fillMaxSize()) {
-                OpenUserProfileInWebView(userProfileURL = profileURL, paddingValues = it, visibility)
+                OpenUserProfileInWebView(
+                    userProfileURL = profileURL,
+                    paddingValues = it,
+                    visibility
+                )
                 if (visibility.value) {
                     CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                 }
@@ -87,26 +92,30 @@ fun DisplayWebViewUI(profileURL: String) {
 @Composable
 fun WebViewTopAppBar() {
     val activity = (LocalLifecycleOwner.current as ComponentActivity)
-    SmallTopAppBar(
+    CenterAlignedTopAppBar(
         title = {
             Text(
                 text = stringResource(id = R.string.app_name)
             )
         },
-        navigationIcon = {
-            IconButton(onClick = {
-                activity.finish()
-            }) {
-                Icon(
-                    imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = stringResource(id = R.string.back_button_accessibility_text)
-                )
-            }
-        })
+    navigationIcon = {
+        IconButton(onClick = {
+            activity.finish()
+        }) {
+            Icon(
+                imageVector = Icons.Filled.ArrowBack,
+                contentDescription = stringResource(id = R.string.back_button_accessibility_text)
+            )
+        }
+    })
 }
 
 @Composable
-fun OpenUserProfileInWebView(userProfileURL: String, paddingValues: PaddingValues, visibility : MutableState<Boolean>) {
+fun OpenUserProfileInWebView(
+    userProfileURL: String,
+    paddingValues: PaddingValues,
+    visibility: MutableState<Boolean>
+) {
     AndroidView(factory = {
         WebView(it).apply {
             layoutParams = ViewGroup.LayoutParams(

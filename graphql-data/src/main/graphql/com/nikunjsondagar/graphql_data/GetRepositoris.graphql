@@ -1,0 +1,21 @@
+query GetRepositories {
+    search(query: "location:in", type: REPOSITORY, first: 25) {
+        edges {
+            node {
+                ... on Repository {
+                    name
+                    description
+                    primaryLanguage {
+                        name,
+                        color
+                    }
+                    owner {
+                        login
+                    }
+                    stargazerCount
+                    url
+                }
+            }
+        }
+    }
+}

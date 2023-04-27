@@ -12,7 +12,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.nikunjsondagar.feature_repos.RepositoriesScreen
+import com.nikunjsondagar.feature_repos.presentation.RepositoryListScreen
+import com.nikunjsondagar.feature_repos.presentation.RepositoryViewModel
 import com.nikunjsondagar.feature_settings.SettingScreen
 import com.nikunjsondagar.feature_users.presentation.DisplayUsersList
 import com.nikunjsondagar.feature_users.presentation.UserListViewModel
@@ -36,7 +37,11 @@ fun MainScreenNavigationGraph(
             }
         }
         composable(route = NavigationScreens.RepoScreen.route) {
-            RepositoriesScreen()
+            val repositoryListViewModel = hiltViewModel<RepositoryViewModel>()
+            val state by repositoryListViewModel.state.collectAsState()
+            RepositoryListScreen(state) { repoURL ->
+                openWebViewActivity(activity, repoURL)
+            }
         }
         composable(route = NavigationScreens.SettingScreen.route) {
             SettingScreen()

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="repo_created_by_label">Created by: %1$s</string>
+    <string name="created_by_icon_accessibility_text">Created by</string>
+</resources>
