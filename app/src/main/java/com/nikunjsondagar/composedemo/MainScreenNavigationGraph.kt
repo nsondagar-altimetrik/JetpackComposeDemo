@@ -1,5 +1,7 @@
 package com.nikunjsondagar.composedemo
 
+import android.app.Activity
+import android.os.Bundle
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -12,11 +14,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.nikunjsondagar.feature_repos.RepositoriesScreen
 import com.nikunjsondagar.feature_settings.SettingScreen
-import com.nikunjsondagar.feature_users.DisplayUsersList
+import com.nikunjsondagar.feature_users.presentation.DisplayUsersList
 import com.nikunjsondagar.feature_users.presentation.UserListViewModel
 
 @Composable
-fun MainScreenNavigationGraph(navHostController: NavHostController, padding : PaddingValues) {
+fun MainScreenNavigationGraph(
+    navHostController: NavHostController,
+    padding: PaddingValues,
+    activity: Activity
+) {
     NavHost(
         navController = navHostController,
         startDestination = NavigationScreens.UserScreen.route,
@@ -25,8 +31,8 @@ fun MainScreenNavigationGraph(navHostController: NavHostController, padding : Pa
         composable(route = NavigationScreens.UserScreen.route) {
             val userListViewModel = hiltViewModel<UserListViewModel>()
             val state by userListViewModel.state.collectAsState()
-            DisplayUsersList(state) {
-                //TODO On click of user, need to open web view
+            DisplayUsersList(state) { profileURL ->
+                openWebViewActivity(activity, profileURL)
             }
         }
         composable(route = NavigationScreens.RepoScreen.route) {
@@ -36,4 +42,10 @@ fun MainScreenNavigationGraph(navHostController: NavHostController, padding : Pa
             SettingScreen()
         }
     }
+}
+
+private fun openWebViewActivity(activity: Activity, url: String) {
+    WebViewActivity.startWebViewActivity(activity, Bundle().apply {
+        putString(WebViewActivity.ProfileURL, url)
+    })
 }

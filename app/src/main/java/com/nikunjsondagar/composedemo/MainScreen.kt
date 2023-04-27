@@ -1,5 +1,6 @@
 package com.nikunjsondagar.composedemo
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -19,20 +20,23 @@ import androidx.navigation.compose.rememberNavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
+fun MainScreen(activity: Activity) {
     val navController = rememberNavController()
     Scaffold(
         topBar = { MainScreenTopBar() },
         bottomBar = { BottomBar(navHostController = navController) }) { innerPadding ->
-        MainScreenNavigationGraph(navHostController = navController, innerPadding)
+        MainScreenNavigationGraph(navHostController = navController, innerPadding, activity)
     }
 }
 
 @Composable
 fun MainScreenTopBar() {
-    SmallTopAppBar(title = {
-        Text(text = stringResource(id = R.string.app_name))
-    })
+    SmallTopAppBar(
+        title = {
+            Text(
+                text = stringResource(id = R.string.app_name)
+            )
+        })
 }
 
 @Composable

@@ -13,8 +13,8 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "ComposeDemo"
-include ':app'
-include ':feature:users'
-include ':feature-users'
-include ':feature-repos'
-include ':feature-settings'
+include(":app")
+include(":feature-users")
+include(":feature-repos")
+include(":feature-settings")
+include(":graphql-data")

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ComposeDemo</string>
+    <string name="back_button_accessibility_text">Back button</string>
+    <string name="web_view_error_message">URL not available</string>
 </resources>

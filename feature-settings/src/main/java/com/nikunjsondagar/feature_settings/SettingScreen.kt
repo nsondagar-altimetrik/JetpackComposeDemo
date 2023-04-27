@@ -2,11 +2,12 @@ package com.nikunjsondagar.feature_settings
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,16 +20,16 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun SettingScreen() {
-    Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background),
-        contentAlignment = Alignment.Center) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
+        contentAlignment = Alignment.Center
+    ) {
         Text(
             text = "Feature is coming soon",
-            color = Color.DarkGray,
             fontWeight = FontWeight.Bold,
             fontSize = MaterialTheme.typography.headlineLarge.fontSize,
-            modifier = Modifier
-                .padding(10.dp)
-                .fillMaxSize(),
             textAlign = TextAlign.Center
         )
     }
