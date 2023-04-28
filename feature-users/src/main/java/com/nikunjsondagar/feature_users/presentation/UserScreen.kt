@@ -117,8 +117,8 @@ fun UserItem(modifier: Modifier, userDetails: UserDetails) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         text = stringResource(
-                            id = R.string.total_followers_count_label,
-                            userDetails.noOfFollowers.value
+                            id = R.string.total_repo_count_label,
+                            userDetails.noOfRepositoriesAvailable
                         ),
                         fontWeight = FontWeight.Normal,
                         fontSize = MaterialTheme.typography.bodySmall.fontSize
@@ -126,8 +126,8 @@ fun UserItem(modifier: Modifier, userDetails: UserDetails) {
                     Spacer(modifier = Modifier.width(10.dp))
                     Text(
                         text = stringResource(
-                            id = R.string.total_repo_count_label,
-                            userDetails.noOfRepositoriesAvailable
+                            id = R.string.total_followers_count_label,
+                            userDetails.noOfFollowers.value
                         ),
                         fontWeight = FontWeight.Normal,
                         fontSize = MaterialTheme.typography.bodySmall.fontSize
