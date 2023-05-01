@@ -109,7 +109,7 @@ fun UserItem(modifier: Modifier, userDetails: UserDetails) {
                     .padding(10.dp)
             ) {
                 Text(
-                    text = userDetails.name ?: "",
+                    text = userDetails.name ?: "NA",
                     fontWeight = FontWeight.Bold,
                     fontSize = MaterialTheme.typography.titleMedium.fontSize
                 )
