@@ -1,4 +1,4 @@
-package com.nikunjsondagar.composedemo
+package com.nikunjsondagar.composedemo.ui.presentation
 
 import android.app.Activity
 import android.content.Context
@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidView
+import com.nikunjsondagar.composedemo.R
 
 class WebViewActivity : ComponentActivity() {
 

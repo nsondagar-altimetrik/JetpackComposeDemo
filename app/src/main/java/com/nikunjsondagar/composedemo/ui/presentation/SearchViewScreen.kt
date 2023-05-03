@@ -1,4 +1,4 @@
-package com.nikunjsondagar.composedemo
+package com.nikunjsondagar.composedemo.ui.presentation
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height

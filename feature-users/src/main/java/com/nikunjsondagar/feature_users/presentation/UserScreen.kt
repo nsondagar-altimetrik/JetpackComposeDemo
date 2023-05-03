@@ -106,7 +106,7 @@ fun UserItem(modifier: Modifier, userDetails: UserDetails) {
             Column(
                 modifier = Modifier
                     .weight(0.7f)
-                    .padding(10.dp)
+                    .padding(6.dp)
             ) {
                 Text(
                     text = userDetails.name ?: "NA",

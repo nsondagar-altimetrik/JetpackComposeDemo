@@ -1,4 +1,4 @@
-package com.nikunjsondagar.composedemo
+package com.nikunjsondagar.composedemo.navigation
 
 import android.app.Activity
 import android.os.Bundle
@@ -6,15 +6,15 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.nikunjsondagar.composedemo.ui.presentation.SharedViewModel
+import com.nikunjsondagar.composedemo.ui.presentation.WebViewActivity
 import com.nikunjsondagar.feature_repos.presentation.RepositoryListScreen
 import com.nikunjsondagar.feature_repos.presentation.RepositoryViewModel
 import com.nikunjsondagar.feature_settings.SettingScreen
@@ -57,6 +57,7 @@ fun MainScreenNavigationGraph(
             }
         }
         composable(route = NavigationScreens.SettingScreen.route) {
+            sharedViewModel.updatesSearchViewState(SharedViewModel.SearchViewState.SEARCH_CLOSED)
             SettingScreen()
         }
     }

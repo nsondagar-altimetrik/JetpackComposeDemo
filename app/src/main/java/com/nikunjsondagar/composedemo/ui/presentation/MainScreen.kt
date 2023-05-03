@@ -1,4 +1,4 @@
-package com.nikunjsondagar.composedemo
+package com.nikunjsondagar.composedemo.ui.presentation
 
 import android.app.Activity
 import androidx.compose.foundation.Image
@@ -15,7 +15,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavDestination
@@ -23,6 +25,9 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.nikunjsondagar.composedemo.navigation.MainScreenNavigationGraph
+import com.nikunjsondagar.composedemo.navigation.NavigationScreens
+import com.nikunjsondagar.composedemo.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,10 +41,12 @@ fun MainScreen(activity: Activity) {
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun MainScreenBar(sharedViewModel: SharedViewModel) {
     when(sharedViewModel.searchViewState.value) {
         SharedViewModel.SearchViewState.SEARCH_ACTIVE -> {
+            val keyboardController = LocalSoftwareKeyboardController.current
             SearchUsersTopBar(
                 searchText = sharedViewModel.searchText.value,
                 searchTextPlaceHolder = stringResource(id = R.string.search_text_placeholder),
@@ -48,6 +55,7 @@ fun MainScreenBar(sharedViewModel: SharedViewModel) {
                 },
                 onSearchClicked = {
                     sharedViewModel.clickButton(true)
+                    keyboardController?.hide()
                 },
                 onSearchCloseClicked = {
                     sharedViewModel.updateSearchText("")

@@ -1,4 +1,4 @@
-package com.nikunjsondagar.composedemo
+package com.nikunjsondagar.composedemo.ui.presentation
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State

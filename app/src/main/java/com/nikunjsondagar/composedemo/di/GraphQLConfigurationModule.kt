@@ -1,5 +1,6 @@
-package com.nikunjsondagar.composedemo
+package com.nikunjsondagar.composedemo.di
 
+import com.nikunjsondagar.composedemo.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
