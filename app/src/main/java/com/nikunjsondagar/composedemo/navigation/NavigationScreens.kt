@@ -1,4 +1,4 @@
-package com.nikunjsondagar.composedemo
+package com.nikunjsondagar.composedemo.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.List

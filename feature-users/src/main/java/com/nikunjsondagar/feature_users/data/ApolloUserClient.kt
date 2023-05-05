@@ -10,10 +10,9 @@ class ApolloUserClient(
 ) : UserClient {
 
     override suspend fun getUserList(searchText: String): List<UserDetails> {
-        return apolloClient.query(GetUsersQuery())
-            .execute()
-            .data?.search?.edges?.mapNotNull {
-            it?.toUserDetails()
-        } ?: emptyList()
+        return apolloClient.query(GetUsersQuery("location:$searchText"))
+            .execute().data?.search?.edges?.mapNotNull {
+                it?.toUserDetails()
+            } ?: emptyList()
     }
 }

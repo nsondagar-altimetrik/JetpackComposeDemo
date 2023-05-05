@@ -22,7 +22,14 @@ class UserListViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
-            _state.update { it.copy(users = getUserListUseCase(""), isLoading = false) }
+            _state.update { it.copy(users = getUserListUseCase("in"), isLoading = false) }
+        }
+    }
+
+    fun updateUserList(searchText: String) {
+        viewModelScope.launch {
+            _state.update { it.copy(isLoading = true) }
+            _state.update { it.copy(users = getUserListUseCase(searchText), isLoading = false) }
         }
     }
 

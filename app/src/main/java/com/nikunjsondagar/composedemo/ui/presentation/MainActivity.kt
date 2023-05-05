@@ -1,4 +1,4 @@
-package com.nikunjsondagar.composedemo
+package com.nikunjsondagar.composedemo.ui.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
