@@ -2,4 +2,6 @@
 <resources>
     <string name="repo_created_by_label">Created by: %1$s</string>
     <string name="created_by_icon_accessibility_text">Created by</string>
+    <string name="try_again_button_text">Try Again</string>
+    <string name="no_internet_connection_error_text">No Internet Connection</string>
 </resources>

@@ -36,13 +36,13 @@ fun MainScreenNavigationGraph(
     ) {
         composable(route = NavigationScreens.UserScreen.route) {
             sharedViewModel.updateSelectedTab(SharedViewModel.SearchTab.USERS)
-            val state by userListViewModel.state.collectAsState()
-            DisplayUsersList(state) { profileURL ->
+            DisplayUsersList(userListViewModel) { profileURL ->
                 openWebViewActivity(activity, profileURL)
             }
             if (sharedViewModel.buttonClicked.value) {
                 LaunchedEffect(key1 = "key1", block = {
-                    userListViewModel.updateUserList(sharedViewModel.searchText.value)
+                    userListViewModel.updateSearchText(sharedViewModel.searchText.value)
+                    userListViewModel.updateUserList()
                 })
                 sharedViewModel.clickButton(false)
             }
@@ -51,8 +51,7 @@ fun MainScreenNavigationGraph(
             sharedViewModel.updatesSearchViewState(SharedViewModel.SearchViewState.SEARCH_CLOSED)
             sharedViewModel.updateSelectedTab(SharedViewModel.SearchTab.REPOS)
             val repositoryListViewModel = hiltViewModel<RepositoryViewModel>()
-            val state by repositoryListViewModel.state.collectAsState()
-            RepositoryListScreen(state) { repoURL ->
+            RepositoryListScreen(repositoryListViewModel) { repoURL ->
                 openWebViewActivity(activity, repoURL)
             }
         }

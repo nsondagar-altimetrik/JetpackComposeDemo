@@ -37,14 +37,19 @@ fun MainScreen(activity: Activity) {
     Scaffold(
         topBar = { MainScreenBar(sharedViewModel) },
         bottomBar = { BottomBar(navHostController = navController) }) { innerPadding ->
-        MainScreenNavigationGraph(navHostController = navController, innerPadding, activity, sharedViewModel)
+        MainScreenNavigationGraph(
+            navHostController = navController,
+            innerPadding,
+            activity,
+            sharedViewModel
+        )
     }
 }
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun MainScreenBar(sharedViewModel: SharedViewModel) {
-    when(sharedViewModel.searchViewState.value) {
+    when (sharedViewModel.searchViewState.value) {
         SharedViewModel.SearchViewState.SEARCH_ACTIVE -> {
             val keyboardController = LocalSoftwareKeyboardController.current
             SearchUsersTopBar(
@@ -63,27 +68,32 @@ fun MainScreenBar(sharedViewModel: SharedViewModel) {
                 }
             )
         }
+
         SharedViewModel.SearchViewState.SEARCH_CLOSED -> {
-            MainScreenTopBar {
-                sharedViewModel.updatesSearchViewState(SharedViewModel.SearchViewState.SEARCH_ACTIVE)
-            }
+            MainScreenTopBar(
+                isInternetAvailable = sharedViewModel.isInternetAvailable(),
+                onSearchClicked = {
+                    sharedViewModel.updatesSearchViewState(SharedViewModel.SearchViewState.SEARCH_ACTIVE)
+                })
         }
     }
 }
 
 @Composable
-fun MainScreenTopBar(onSearchClicked: () -> Unit) {
+fun MainScreenTopBar(onSearchClicked: () -> Unit, isInternetAvailable: Boolean) {
     CenterAlignedTopAppBar(title = {
         Text(
             text = stringResource(id = R.string.app_name)
         )
     }, actions = {
-        IconButton(onClick = { onSearchClicked() }) {
-            Icon(
-                imageVector = Icons.Default.Search,
-                contentDescription = "Search icon",
-                tint = Color.DarkGray
-            )
+        if (isInternetAvailable) {
+            IconButton(onClick = { onSearchClicked() }) {
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = "Search icon",
+                    tint = Color.DarkGray
+                )
+            }
         }
     })
 }

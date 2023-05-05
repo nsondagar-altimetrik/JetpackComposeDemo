@@ -3,6 +3,7 @@ package com.nikunjsondagar.feature_repos.presentation
 import android.graphics.Color.parseColor
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,6 +18,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,12 +27,15 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,24 +46,62 @@ import com.nikunjsondagar.feature_repos.domain.RepositoryLanguage
 
 @Composable
 fun RepositoryListScreen(
-    state: RepositoryViewModel.GetRepositoryListState,
+    repositoryListViewModel: RepositoryViewModel,
     onRepositoryClick: (String) -> Unit
 ) {
+    val state by repositoryListViewModel.state.collectAsState()
     Box(modifier = Modifier.fillMaxSize()) {
         if (state.isLoading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         } else {
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(state.repositoryList) { repository ->
-                    AddRepositoryListItemColumn(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(10.dp)
-                            .clickable { onRepositoryClick(repository.repoURL) },
-                        repository = repository
-                    )
+            state.errorMessage?.let { message ->
+                DisplayErrorMessage(errorMessage = message) {
+                    repositoryListViewModel.updateRepositoryList()
+                }
+            } ?: kotlin.run {
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    items(state.repositoryList) { repository ->
+                        AddRepositoryListItemColumn(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(10.dp)
+                                .clickable { onRepositoryClick(repository.repoURL) },
+                            repository = repository
+                        )
+                    }
                 }
             }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun PreviewErrorMessage() {
+    DisplayErrorMessage(errorMessage = "No Internet Available") {
+        // TODO
+    }
+}
+
+@Composable
+fun DisplayErrorMessage(errorMessage: String, onTryAgainButtonClick: () -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Text(
+            text = errorMessage,
+            fontWeight = FontWeight.Bold,
+            fontSize = MaterialTheme.typography.titleLarge.fontSize,
+            textAlign = TextAlign.Center,
+            color = Color.Red
+        )
+        Spacer(modifier = Modifier.size(6.dp))
+        Button(onClick = { onTryAgainButtonClick() }) {
+            Text(text = stringResource(id = R.string.try_again_button_text))
         }
     }
 }
@@ -96,10 +139,15 @@ fun AddRepositoryListItemColumn(modifier: Modifier, repository: Repository) {
         ) {
             Box(modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    text = repository.name, modifier = Modifier.align(Alignment.TopStart), textAlign = TextAlign.Start,
+                    text = repository.name,
+                    modifier = Modifier.align(Alignment.TopStart),
+                    textAlign = TextAlign.Start,
                     maxLines = 1
                 )
-                Row(modifier = Modifier.align(Alignment.TopEnd), verticalAlignment = Alignment.CenterVertically) {
+                Row(
+                    modifier = Modifier.align(Alignment.TopEnd),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     IconButton(
                         onClick = {
                             updateRepositoryStarCount(repository)
@@ -133,7 +181,8 @@ fun AddRepositoryListItemColumn(modifier: Modifier, repository: Repository) {
             Spacer(modifier = Modifier.size(16.dp))
             Box(modifier = Modifier.fillMaxWidth()) {
                 Row(
-                    modifier = Modifier.align(Alignment.TopStart), verticalAlignment = Alignment.CenterVertically
+                    modifier = Modifier.align(Alignment.TopStart),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     IconButton(
                         onClick = {
